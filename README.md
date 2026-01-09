@@ -1,90 +1,125 @@
-***# Database \& System Monitoring with Prometheus + Grafana***
+Database Monitoring with Prometheus + Grafana
+Objective
+
+Set up monitoring for PostgreSQL, MySQL, and system metrics using Prometheus and Grafana.
+
+You will get:
+
+Prometheus targets UP
+
+Node Exporter for system metrics
+
+Database exporters for MySQL & PostgreSQL
+
+Grafana dashboards for all metrics
+
+Setup Steps
+1. Install Prometheus
+sudo mkdir /etc/prometheus /var/lib/prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz
+tar xvf prometheus-2.48.0.linux-amd64.tar.gz
+sudo cp prometheus-2.48.0.linux-amd64/prometheus /usr/local/bin/
+sudo cp -r prometheus-2.48.0.linux-amd64/consoles /etc/prometheus/
+sudo cp -r prometheus-2.48.0.linux-amd64/console_libraries /etc/prometheus/
+
+2. Prometheus Config
+
+Create /etc/prometheus/prometheus.yml:
+
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+- job_name: 'prometheus'
+  static_configs:
+    - targets: ['localhost:9090']
+
+- job_name: 'node_exporter'
+  static_configs:
+    - targets: ['localhost:9100']
+
+- job_name: 'postgres_exporter'
+  static_configs:
+    - targets: ['localhost:9187']
+
+- job_name: 'mysql_exporter'
+  static_configs:
+    - targets: ['localhost:9104']
 
 
+Run Prometheus:
 
-***## Overview***
+prometheus --config.file=/etc/prometheus/prometheus.yml
 
-***This project monitors \*\*PostgreSQL\*\*, \*\*MySQL\*\*, and system metrics using \*\*Prometheus\*\* and \*\*Grafana\*\*.***
+3. Node Exporter (System Metrics)
+wget https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
+tar xvf node_exporter-1.6.0.linux-amd64.tar.gz
+sudo cp node_exporter-1.6.0.linux-amd64/node_exporter /usr/local/bin/
+node_exporter &
 
+4. PostgreSQL Exporter
+wget https://github.com/prometheus-community/postgres_exporter/releases/download/v0.13.0/postgres_exporter_v0.13.0_linux-amd64.tar.gz
+tar xvf postgres_exporter_v0.13.0_linux-amd64.tar.gz
+sudo cp postgres_exporter /usr/local/bin/
+export DATA_SOURCE_NAME="postgresql://username:password@localhost:5432/postgres?sslmode=disable"
+postgres_exporter &
 
+5. MySQL Exporter
+wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.15.0/mysqld_exporter-0.15.0.linux-amd64.tar.gz
+tar xvf mysqld_exporter-0.15.0.linux-amd64.tar.gz
+sudo cp mysqld_exporter /usr/local/bin/
+export DATA_SOURCE_NAME="username:password@(localhost:3306)/"
+mysqld_exporter &
 
-***## Components***
-
-***- \*\*Prometheus\*\*: Collects metrics from exporters***
-
-***- \*\*Grafana\*\*: Displays dashboards***
-
-***- \*\*Node Exporter\*\*: System metrics (CPU, memory, disk)***
-
-***- \*\*PostgreSQL Exporter\*\*: PostgreSQL metrics***
-
-***- \*\*MySQL Exporter\*\*: MySQL metrics***
-
-
-
-***## Setup Steps***
-
-***1. Install Prometheus and Grafana.***
-
-***2. Install Node, PostgreSQL, and MySQL exporters.***
-
-***3. Configure Prometheus targets in `prometheus/prometheus.yml`.***
-
-***4. Start all services and import dashboards in Grafana:***
-
-   ***- System Metrics***
-
-   ***- PostgreSQL***
-
-   ***- MySQL***
+6. Grafana Setup
+sudo apt-get install -y grafana
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
 
 
+Open Grafana at http://localhost:3000
 
-***---***
+Login: admin/admin
 
+Add Prometheus as data source: http://localhost:9090
 
+Import dashboards:
 
-***## Screenshots***
+System Metrics: Node Exporter Full
 
+PostgreSQL Metrics: PostgreSQL Overview
 
+MySQL Metrics: MySQL Overview
 
-***\*\*Prometheus Targets\*\****  
+Dashboards
 
-***!\[Prometheus Targets](screenshots/prometheus-targets.png)***
+System Metrics → CPU, Memory, Disk, Network
 
+PostgreSQL Metrics → Connections, Queries/sec, Replication
 
+MySQL Metrics → Connections, Queries, Slow Queries
 
-***\*\*System Dashboard\*\****  
+Screenshots
 
-***!\[System Dashboard](screenshots/system-dashboard.png)***
+"C:\Users\HP\monitoring-task\screenshots\prometheus-targets.png" → All targets UP
 
+"C:\Users\HP\monitoring-task\screenshots\system-dashboard.png"
 
+"C:\Users\HP\monitoring-task\screenshots\postgres-dashboard.png"
 
-***\*\*PostgreSQL Dashboard\*\****  
+"C:\Users\HP\monitoring-task\screenshots\mysql-dashboard.png"
 
-***!\[PostgreSQL Dashboard](screenshots/postgres-dashboard.png)***
-
-
-
-***\*\*MySQL Dashboard\*\****  
-
-***!\[MySQL Dashboard](screenshots/mysql-dashboard.png)***
-
-
-
-***---***
-
-
-
-***## Files***
-
-
-
-***- `prometheus/prometheus.yml` → Prometheus config***  
-
-***- `services/\*.service` → Exporter services***  
-
-***- `screenshots/` → Dashboard images***
-
-
-
+Repo Structure
+monitoring-task/
+│
+├── prometheus/prometheus.yml
+├── exporters/node_exporter.service
+├── exporters/postgres_exporter.service
+├── exporters/mysqld_exporter.service
+├── grafana/dashboards/
+├── screenshots/
+│   ├── prometheus_targets.png
+│   ├── system_metrics_dashboard.png
+│   ├── postgres_dashboard.png
+│   └── mysql_dashboard.png
+└── README.md
