@@ -110,18 +110,16 @@ Open Grafana at http://localhost:3000 (admin/admin)
 
 ## Screenshots
 
-
+### All targets UP
 <img width="1920" height="978" alt="prometheus-targets" src="https://github.com/user-attachments/assets/8cf8fd6c-b992-4a83-87bc-4c349860bbf0" />
 
-All targets UP
-
-#### system-dashboard
+#### System-dashboard
 <img width="1920" height="975" alt="system-dashboard" src="https://github.com/user-attachments/assets/87659687-e18c-47d4-86e5-d0e11ef15e5e" />
 
-#### postgres-dashboard
+#### Postgres-dashboard
 <img width="1920" height="975" alt="postgres-dashboard" src="https://github.com/user-attachments/assets/482d3487-6e7f-4db7-84bc-1431475205fa" />
 
-#### mysql-dashboard
+#### Mysql-dashboard
 <img width="1920" height="988" alt="mysql-dashboard" src="https://github.com/user-attachments/assets/19c04e13-0b99-4804-ba8d-0041be1e9ece" />
 
 ### Conclusion
