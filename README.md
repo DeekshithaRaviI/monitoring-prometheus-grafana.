@@ -12,19 +12,25 @@ Database exporters for MySQL & PostgreSQL
 
 Grafana dashboards for all metrics
 
-Setup StepsInstall Prometheus
+### Setup Steps Install Prometheus
 
 bash
+
 sudo mkdir /etc/prometheus /var/lib/prometheus
+
 wget https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz
+
 tar xvf prometheus-2.48.0.linux-amd64.tar.gz
+
 sudo cp prometheus-2.48.0.linux-amd64/prometheus /usr/local/bin/
+
 sudo cp -r prometheus-2.48.0.linux-amd64/consoles /etc/prometheus/
+
 sudo cp -r prometheus-2.48.0.linux-amd64/console_libraries /etc/prometheus/
 
 
 
-Prometheus ConfigCreate /etc/prometheus/prometheus.yml:
+### Prometheus ConfigCreate /etc/prometheus/prometheus.yml:
 
 global:
   scrape_interval: 15s
@@ -42,14 +48,19 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9104']
 
-Run Prometheus
+### Run Prometheus
 bash
+
 prometheus --config.file=/etc/prometheus/prometheus.yml
 
-Node Exporter (System Metrics)
+### Node Exporter (System Metrics)
+
 bash
+
 wget https://github.com/prometheus/node_exporter/releases/download/v1.6.0/node_exporter-1.6.0.linux-amd64.tar.gz
+
 tar xvf node_exporter-1.6.0.linux-amd64.tar.gz
+
 sudo cp node_exporter-1.6.0.linux-amd64/node_exporter /usr/local/bin/node_exporter
 
 PostgreSQL Exporter
@@ -59,25 +70,36 @@ tar xvf postgres_exporter_v0.13.0_linux-amd64.tar.gz
 sudo cp postgres_exporter /usr/local/bin/postgres_exporter
 export DATA_SOURCE_NAME="postgresql://username:password@localhost:5432/postgres?sslmode=disable"
 
-MySQL Exporter
+### MySQL Exporter
+
 bash
+
 wget https://github.com/prometheus/mysqld_exporter/releases/download/v0.15.0/mysqld_exporter-0.15.0.linux-amd64.tar.gz
+
 tar xvf mysqld_exporter-0.15.0.linux-amd64.tar.gz
+
 sudo cp mysqld_exporter /usr/local/bin/mysqld_exporter
+
 export DATA_SOURCE_NAME="username:password@(localhost:3306)/"
 
 
-Grafana Setup
+### Grafana Setup
+
 bash
+
 sudo apt-get install -y grafana
+
 sudo systemctl enable grafana-server
+
 sudo systemctl start grafana-server
 
 Open Grafana at http://localhost:3000 (admin/admin)
 
 
-Dashboards- System Metrics: Node Exporter Full
+### Dashboards- System Metrics: Node Exporter Full
+
 - PostgreSQL Metrics: PostgreSQL Overview
+
 - MySQL Metrics: MySQL Overview
 
 
