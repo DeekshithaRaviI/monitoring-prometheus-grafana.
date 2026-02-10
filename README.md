@@ -15,7 +15,6 @@ Grafana dashboards for all metrics
 Setup StepsInstall Prometheus
 
 bash
-# Install Prometheus
 sudo mkdir /etc/prometheus /var/lib/prometheus
 wget https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz
 tar xvf prometheus-2.48.0.linux-amd64.tar.gz
