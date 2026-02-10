@@ -63,11 +63,16 @@ tar xvf node_exporter-1.6.0.linux-amd64.tar.gz
 
 sudo cp node_exporter-1.6.0.linux-amd64/node_exporter /usr/local/bin/node_exporter
 
-PostgreSQL Exporter
+### PostgreSQL Exporter
+
 bash
+
 wget https://github.com/prometheus-community/postgres_exporter/releases/download/v0.13.0/postgres_exporter_v0.13.0_linux-amd64.tar.gz
+
 tar xvf postgres_exporter_v0.13.0_linux-amd64.tar.gz
+
 sudo cp postgres_exporter /usr/local/bin/postgres_exporter
+
 export DATA_SOURCE_NAME="postgresql://username:password@localhost:5432/postgres?sslmode=disable"
 
 ### MySQL Exporter
